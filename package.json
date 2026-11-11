@@ -1,0 +1,6 @@
+{
+  "name": "novo-sao-cristovao-lp",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}
