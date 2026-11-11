@@ -8,9 +8,9 @@
  * e o lead NÃO é considerado entregue.
  *
  * Variáveis de ambiente (definidas no painel da hospedagem, nunca no front-end):
- *   N4FLOW_URL          URL do webhook ou da API de leads do N4 Flow   (pendente)
- *   N4FLOW_AUTH_HEADER  Nome do cabeçalho de autenticação, ex. "Authorization" (pendente)
- *   N4FLOW_AUTH_VALUE   Valor da credencial                              (pendente)
+ *   N4FLOW_URL          <endereço do Flow>/api/integrations/forms (Módulo 7 do N4 Flow)
+ *   N4FLOW_AUTH_HEADER  X-N4-Form-Key
+ *   N4FLOW_AUTH_VALUE   chave do formulário, gerada em Flow › Configurações › Formulários
  *   LEAD_FALLBACK_URL   Opcional: destino de contingência (planilha, e-mail ou fila)
  */
 
@@ -52,6 +52,7 @@ export default async function handler(req, res) {
     idempotency_key: idempotencyKey,
     lead: { nome: clip(nome, 120), whatsapp },
     ...FIXOS,
+    campos: { empreendimento: FIXOS.empreendimento },
     utm: {
       source: clip(body?.utm?.source), medium: clip(body?.utm?.medium),
       campaign: clip(body?.utm?.campaign), content: clip(body?.utm?.content),
@@ -90,7 +91,12 @@ export default async function handler(req, res) {
         signal: AbortSignal.timeout(8000),
       });
       if (r.status === 409) return res.status(409).json({ ok: false, erro: "lead_duplicado" });
+      // 200: lead criado ou atualizado (ou envio repetido); 202: guardado no Flow e na fila.
       if (r.ok) return res.status(200).json({ ok: true });
+      if (r.status === 422) {                  // o Flow recusou o dado (ex.: telefone inválido)
+        const detalhe = await r.json().catch(() => ({}));
+        return res.status(422).json({ ok: false, erro: detalhe.error || "dados_recusados" });
+      }
       if (r.status < 500) {                    // erro do contrato: não adianta repetir
         await fallback(payload, "n4flow_" + r.status);
         return res.status(502).json({ ok: false, erro: "n4flow_rejeitou" });
