@@ -32,6 +32,12 @@ const nowRecife = () => new Date(Date.now() - 3 * 3600e3).toISOString().replace(
 const clip = (v, n = 200) => (v == null ? null : String(v).slice(0, n));
 
 export default async function handler(req, res) {
+  // GET: a página pergunta se o N4 Flow está configurado (sem expor nada além disso).
+  if (req.method === "GET") {
+    const { N4FLOW_URL, N4FLOW_AUTH_HEADER, N4FLOW_AUTH_VALUE } = process.env;
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json({ ok: true, integracao: N4FLOW_URL && N4FLOW_AUTH_HEADER && N4FLOW_AUTH_VALUE ? "ativa" : "nao_configurada" });
+  }
   if (req.method !== "POST") return res.status(405).json({ ok: false, erro: "metodo_nao_permitido" });
 
   const body = typeof req.body === "string" ? safeJson(req.body) : req.body || {};

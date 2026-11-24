@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
-<link rel="preload" as="image" href="assets/terreno-1600.avif" imagesrcset="assets/terreno-960.avif 960w, assets/terreno-1600.avif 1600w" imagesizes="(min-width: 1024px) 45vw, 100vw" type="image/avif">
+<link rel="preload" as="image" href="assets/hero-aereo-poster.webp" type="image/webp" fetchpriority="high">
 <style>
 /* Direção B · Marco — o lote é o protagonista: hachura do logo, linhas de cota e planta de situação.
    Página de mundo visual único (tema claro fixo, sem modo escuro por decisão de marca). */
@@ -67,21 +67,18 @@ a{color:inherit}
 .hero-copy{padding:44px var(--gutter) 48px;display:flex;flex-direction:column;justify-content:center}
 .hero h1{margin:0;font-size:clamp(44px,4.6vw,68px);line-height:.93;color:var(--papel);max-width:16ch}
 .hero .lead{margin:18px 0 0;font-size:clamp(16px,1.35vw,20px);line-height:1.45;color:rgba(246,245,239,.88);max-width:34em}
-.price{margin-top:28px;padding-top:16px;border-top:1px solid rgba(246,245,239,.32);display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"anchor" "now" "saving";justify-content:start;gap:12px}
-.anchor{grid-area:anchor;display:flex;flex-direction:column;gap:2px}
-.anchor .k{font-size:14px;color:rgba(246,245,239,.82)}
-.anchor .v{font-size:clamp(40px,3.4vw,52px);line-height:.9;color:var(--papel)}
-.anchor s{text-decoration-line:line-through;text-decoration-color:var(--limao);text-decoration-thickness:.05em}
-.price .saving{grid-area:saving}
-.price-now{grid-area:now;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.price-now .por{font-size:clamp(17px,1.4vw,21px);font-weight:700;color:var(--papel);align-self:flex-start;margin-top:.4em}
-.price-now .value{font-size:clamp(84px,8.6vw,128px);line-height:.8;color:var(--limao)}
-.price-now .terms{font-size:clamp(17px,1.4vw,21px);font-weight:700;color:var(--papel)}
+/* De / Por: as duas cifras empilhadas e alinhadas, para a comparação ser imediata */
+.price{margin-top:28px;padding-top:20px;border-top:1px solid rgba(246,245,239,.32);display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(14px,1.4vw,22px);row-gap:14px;align-items:baseline}
+.price .tag{font-family:var(--display);font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:clamp(24px,2vw,30px);line-height:1;color:var(--papel)}
+.price .v{white-space:nowrap;display:inline-block}
+.price .was{position:relative;font-size:clamp(46px,4.2vw,64px);line-height:.85;color:var(--papel);justify-self:start}
+.price .was::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:.1em;background:var(--limao);transform:translateY(-50%) rotate(-7deg);box-shadow:0 0 0 1px var(--verde)}
+.price .now{font-size:clamp(78px,7.4vw,118px);line-height:.8;color:var(--limao)}
+.price .t{grid-column:2;margin-top:-4px;font-size:15px;color:rgba(246,245,239,.85)}
+.price .t b{color:var(--papel);font-weight:700}
 .limit{margin:18px 0 0;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:var(--papel);max-width:36em}
 .limit::before{content:"";flex:0 0 auto;width:14px;height:14px;margin-top:3px;background:repeating-linear-gradient(-45deg,var(--limao) 0 1.5px,transparent 1.5px 4.5px);outline:1.5px solid var(--limao)}
-.saving{display:flex;align-items:baseline;gap:6px;margin-top:4px;font-size:16px;color:rgba(246,245,239,.85)}
-.saving .k{font-size:inherit}
-.saving .v{font-family:var(--texto);font-stretch:100%;font-weight:700;text-transform:none;letter-spacing:0;font-size:inherit;color:var(--papel)}
+
 /* Linha de cota com três condições */
 .cota{margin-top:30px;position:relative;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:0;border-top:1px solid rgba(246,245,239,.55);max-width:620px}
 .cota::before,.cota::after{content:"";position:absolute;top:-7px;width:1px;height:13px;background:rgba(246,245,239,.75)}
@@ -106,8 +103,10 @@ a{color:inherit}
 .legal-mini{margin:20px 0 0;font-size:12.5px;line-height:1.5;color:rgba(246,245,239,.72);max-width:48em}
 
 .hero-media{position:relative;margin:0;min-height:100%;background:var(--verde-2)}
-.hero-media picture,.hero-media img{position:absolute;inset:0;width:100%;height:100%}
-.hero-media img{object-fit:cover;object-position:28% 62%}
+.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.vplay{position:absolute;right:0;bottom:0;width:44px;height:44px;display:grid;place-items:center;border:0;background:var(--verde);color:var(--papel);cursor:pointer}
+.vplay:focus-visible{outline:2px solid var(--limao);outline-offset:-4px}
+.vplay .i-play{display:none}.vplay[aria-pressed="true"] .i-play{display:block}.vplay[aria-pressed="true"] .i-pause{display:none}
 .hero-media figcaption{position:absolute;left:0;bottom:0;background:var(--verde);color:var(--papel);font-size:13px;padding:10px 16px 10px 14px;display:flex;align-items:center;gap:10px}
 .hero-media figcaption::before{content:"";width:12px;height:12px;background:repeating-linear-gradient(-45deg,var(--limao) 0 1.5px,transparent 1.5px 4px);outline:1.5px solid var(--limao)}
 /* cota vertical na emenda foto/painel */
@@ -248,13 +247,11 @@ form .btn[disabled]{opacity:.7;cursor:progress}
   .hero h1{font-size:clamp(40px,11.5vw,52px)}
   .hero .lead{display:none}
   .lead-m{display:block !important}
-  .price{margin-top:20px;padding-top:12px;gap:10px}
-  .saving{font-size:15px}
-  .anchor{flex-direction:row;align-items:baseline;gap:10px}
-  .anchor .v{font-size:38px}
-  .price-now .por{display:none}
-  .price-now{column-gap:8px}
-  .price-now .value{font-size:clamp(62px,18vw,84px)}
+  .price{margin-top:20px;padding-top:16px;column-gap:10px;row-gap:10px}
+  .price .tag{font-size:20px}
+  .price .was{font-size:clamp(34px,10.5vw,44px)}
+  .price .now{font-size:clamp(48px,14.6vw,70px)}
+  .price .t{font-size:14px}
   .limit{font-size:14px;margin-top:14px}
   .cta-row{margin-top:20px}
   .cta-row .btn{width:100%;font-size:19px;letter-spacing:.02em;min-height:58px;padding:0 16px;gap:10px}
@@ -296,7 +293,7 @@ form .btn[disabled]{opacity:.7;cursor:progress}
 
 <div class="proto-ribbon" role="note">
   <strong>Protótipo N4 · Direção Marco</strong>
-  <span><span class="long">Hero e localização. </span>Formulário em modo demonstração, não integrado ao N4 Flow.</span>
+  <span id="ribbon-status"><span class="long">Hero e localização. </span>Formulário em modo demonstração, não integrado ao N4 Flow.</span>
 </div>
 
 <header class="topbar">
@@ -320,20 +317,12 @@ form .btn[disabled]{opacity:.7;cursor:progress}
       <h1 id="hero-title" class="display">Seu terreno em Arcoverde por apenas R$ 15 mil.</h1>
       <p class="lead">Conquiste seu lote de 150 m² no Novo São Cristóvão, um bairro planejado para acompanhar o futuro de Arcoverde.</p>
 
-      <div class="price">
-        <div class="anchor">
-          <span class="k">Valor de tabela</span>
-          <span class="v display num"><s>R$ 35.000</s></span>
-        </div>
-        <div class="price-now">
-          <span class="por">Por</span>
-          <span class="value display num">R$ 15.000</span>
-          <span class="terms">à vista</span>
-        </div>
-        <div class="saving">
-          <span class="k">Você economiza</span>
-          <span class="v num">R$ 20.000</span>
-        </div>
+      <div class="price" role="group" aria-label="De R$ 35.000 por R$ 15.000 à vista">
+        <span class="tag" aria-hidden="true">De</span>
+        <span class="v was display num" aria-hidden="true">R$ 35.000</span>
+        <span class="tag" aria-hidden="true">Por</span>
+        <span class="v now display num" aria-hidden="true">R$ 15.000</span>
+        <span class="t" aria-hidden="true"><b>à vista</b> · R$ 20 mil a menos que a tabela</span>
       </div>
       <p class="limit">Oferta limitada aos lotes participantes. Quando eles acabarem, a condição de R$ 15 mil se encerra, mesmo antes de 31/12/2026.</p>
 
@@ -356,11 +345,14 @@ form .btn[disabled]{opacity:.7;cursor:progress}
     </div>
 
     <figure class="hero-media">
-      <picture>
-        <source type="image/avif" srcset="assets/terreno-960.avif 960w, assets/terreno-1600.avif 1600w" sizes="(min-width: 1024px) 42vw, 100vw">
-        <source type="image/webp" srcset="assets/terreno-960.webp 960w, assets/terreno-1600.webp 1600w" sizes="(min-width: 1024px) 42vw, 100vw">
-        <img src="assets/terreno-1600.jpg" width="1600" height="978" alt="Terreno do Novo São Cristóvão com marcos brancos de demarcação, estrada de terra e a serra ao fundo" fetchpriority="high" decoding="async">
-      </picture>
+      <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/hero-aereo-poster.webp" width="1280" height="720" aria-label="Vista aérea de Arcoverde, com o bairro, as ruas e a serra ao fundo">
+        <source src="assets/hero-aereo-480.mp4" type="video/mp4" media="(max-width: 767px)">
+        <source src="assets/hero-aereo-720.mp4" type="video/mp4">
+      </video>
+      <button class="vplay" id="hero-vplay" type="button" aria-label="Pausar vídeo" aria-pressed="false">
+        <svg class="i-pause" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M4 2h3v12H4zM9 2h3v12H9z" fill="currentColor"/></svg>
+        <svg class="i-play" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z" fill="currentColor"/></svg>
+      </button>
       <figcaption>Novo São Cristóvão · Arcoverde-PE</figcaption>
     </figure>
   </div>
@@ -518,7 +510,7 @@ form .btn[disabled]{opacity:.7;cursor:progress}
       <span><b class="num">R$ 15.000</b>À vista</span>
       <span><b class="num">31/12/2026</b>Validade</span>
     </div>
-    <div class="demo-flag" role="note">
+    <div class="demo-flag" id="demo-flag" role="note">
       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
       <span><b>Modo demonstração.</b> Os dados ficam só nesta página e não são enviados ao N4 Flow. A integração real depende do endpoint e da credencial do cliente.</span>
     </div>
@@ -557,8 +549,8 @@ form .btn[disabled]{opacity:.7;cursor:progress}
 
   /* ---------- Configuração da integração ---------- */
   const LEAD_CONFIG = {
-    mode: "demo",                       // "demo" | "live"
-    endpoint: null,                     // definido no servidor, nunca aqui. Ex.: "/api/lead"
+    mode: "demo",                       // vira "live" sozinho quando /api/lead responde que o N4 Flow está configurado
+    endpoint: "/api/lead",              // função da própria hospedagem; a credencial do Flow fica só no servidor
     origem: "Landing Page",
     empreendimento: "Novo São Cristóvão",
     campanha: "Oferta à Vista R$ 15.000",
@@ -667,6 +659,19 @@ form .btn[disabled]{opacity:.7;cursor:progress}
   });
 
   /* ---------- Barra fixa no celular ---------- */
+
+  /* Vídeo do hero: roda em loop; para quem pede menos movimento, fica no quadro parado.
+     O botão pausa e retoma; fora da tela, o vídeo pausa para poupar bateria. */
+  (() => {
+    const v = document.getElementById("hero-video"), b = document.getElementById("hero-vplay");
+    if (!v || !b) return;
+    let user = false;
+    const set = (paused) => { b.setAttribute("aria-pressed", paused ? "true" : "false"); b.setAttribute("aria-label", paused ? "Reproduzir vídeo" : "Pausar vídeo"); };
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); user = true; set(true); }
+    b.addEventListener("click", () => { if (v.paused) { user = false; v.play().catch(() => {}); set(false); } else { user = true; v.pause(); set(true); } });
+    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (user) return; e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }).observe(v);
+  })();
+
   const dock = document.getElementById("dock");
   const heroCta = document.getElementById("hero-cta");
   if ("IntersectionObserver" in window) {
@@ -735,10 +740,33 @@ form .btn[disabled]{opacity:.7;cursor:progress}
     catch (e) { return s; }
   };
 
+  /* Liga o modo real sozinho: a função /api/lead diz se as credenciais do N4 Flow
+     estão configuradas na hospedagem. Sem resposta (ex.: visualização fora da Vercel),
+     o formulário continua em demonstração. */
+  (async () => {
+    try {
+      const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 4000);
+      const r = await fetch(LEAD_CONFIG.endpoint, { method: "GET", signal: ctl.signal });
+      clearTimeout(t);
+      const info = r.ok ? await r.json() : null;
+      if (info && info.integracao === "ativa") {
+        LEAD_CONFIG.mode = "live";
+        document.getElementById("demo-flag").hidden = true;
+        document.getElementById("ribbon-status").textContent = "Formulário integrado ao N4 Flow.";
+        const sm = document.querySelector("#lead-done summary"); if (sm) sm.textContent = "Ver os dados enviados ao N4 Flow";
+      }
+    } catch (e) { /* segue em demonstração */ }
+  })();
+
   const send = async (payload) => {
     if (LEAD_CONFIG.mode === "live" && LEAD_CONFIG.endpoint) {
       const r = await fetch(LEAD_CONFIG.endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Idempotency-Key": payload.idempotency_key }, body: JSON.stringify(payload) });
       if (r.status === 409) return { duplicate: true };
+      if (r.status === 422) {
+        const info = await r.json().catch(() => ({}));
+        const msg = info.erros ? Object.values(info.erros)[0] : "Confira o nome e o WhatsApp e tente de novo.";
+        return { rejected: true, msg: msg };
+      }
       if (!r.ok) throw new Error("http_" + r.status);
       return { ok: true };
     }
@@ -762,6 +790,7 @@ form .btn[disabled]{opacity:.7;cursor:progress}
     sending = true; submitBtn.disabled = true; submitBtn.textContent = "Enviando…";
     try {
       const res = await send(payload);
+      if (res.rejected) { statusEl.className = "status error"; statusEl.textContent = res.msg; return; }
       if (res.duplicate) { statusEl.textContent = "Este número já está cadastrado. Nosso atendimento vai falar com você."; return; }
       seen.push(key); store.set("nsc_leads", seen);
       const first = payload.lead.nome.split(" ")[0];
