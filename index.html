@@ -62,9 +62,9 @@ a{color:inherit}
 .topbar .sign .sep{width:1px;height:28px;background:rgba(6,63,43,.2)}
 
 /* ---------- HERO ---------- */
-.hero{background:var(--verde);color:var(--papel)}
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--verde);color:var(--papel)}
 .hero-in{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);min-height:740px}
-.hero-copy{padding:44px var(--gutter) 48px;display:flex;flex-direction:column;justify-content:center}
+.hero-copy{position:relative;z-index:1;padding:44px var(--gutter) 48px;display:flex;flex-direction:column;justify-content:center}
 .hero h1{margin:0;font-size:clamp(44px,4.6vw,68px);line-height:.93;color:var(--papel);max-width:16ch}
 .hero .lead{margin:18px 0 0;font-size:clamp(16px,1.35vw,20px);line-height:1.45;color:rgba(246,245,239,.88);max-width:34em}
 /* De / Por: as duas cifras empilhadas e alinhadas, para a comparação ser imediata */
@@ -102,12 +102,15 @@ a{color:inherit}
 .cta-note{font-size:14px;line-height:1.4;color:rgba(246,245,239,.82);max-width:15em}
 .legal-mini{margin:20px 0 0;font-size:12.5px;line-height:1.5;color:rgba(246,245,239,.72);max-width:48em}
 
-.hero-media{position:relative;margin:0;min-height:100%;background:var(--verde-2)}
+/* Vídeo ocupa o hero inteiro; o degradê escurece o lado do texto para manter o contraste */
+.hero-media{position:absolute;inset:0;z-index:0;margin:0;background:var(--verde-2)}
+.hero-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,var(--verde) 0%,rgba(6,63,43,.94) 34%,rgba(6,63,43,.72) 52%,rgba(6,63,43,.2) 78%,rgba(6,63,43,0) 100%),linear-gradient(0deg,rgba(6,63,43,.55) 0%,rgba(6,63,43,0) 22%)}
+.hero-media figcaption,.vplay{z-index:1}
 .hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
 .vplay{position:absolute;right:0;bottom:0;width:44px;height:44px;display:grid;place-items:center;border:0;background:var(--verde);color:var(--papel);cursor:pointer}
 .vplay:focus-visible{outline:2px solid var(--limao);outline-offset:-4px}
 .vplay .i-play{display:none}.vplay[aria-pressed="true"] .i-play{display:block}.vplay[aria-pressed="true"] .i-pause{display:none}
-.hero-media figcaption{position:absolute;left:0;bottom:0;background:var(--verde);color:var(--papel);font-size:13px;padding:10px 16px 10px 14px;display:flex;align-items:center;gap:10px}
+.hero-media figcaption{position:absolute;right:44px;bottom:0;background:var(--verde);color:var(--papel);font-size:13px;padding:10px 16px 10px 14px;display:flex;align-items:center;gap:10px}
 .hero-media figcaption::before{content:"";width:12px;height:12px;background:repeating-linear-gradient(-45deg,var(--limao) 0 1.5px,transparent 1.5px 4px);outline:1.5px solid var(--limao)}
 /* cota vertical na emenda foto/painel */
 .hero-media .vcota{position:absolute;left:0;top:28px;bottom:64px;width:1px;background:rgba(246,245,239,.6)}
@@ -216,10 +219,15 @@ form .btn[disabled]{opacity:.7;cursor:progress}
 /* ---------- MOBILE ---------- */
 @media (max-width: 1023px){
   .hero-in{grid-template-columns:minmax(0,1fr);min-height:0}
-  .hero-media{order:-1;height:clamp(150px,34vw,320px);min-height:0}
+  /* No celular o vídeo cobre o topo do hero e se dissolve no verde, para não ampliar demais a imagem */
+  .hero-media{bottom:auto;height:clamp(460px,128vw,620px)}
+  .hero-media::after{background:linear-gradient(180deg,rgba(6,63,43,.12) 0%,rgba(6,63,43,.45) 34%,rgba(6,63,43,.86) 62%,var(--verde) 100%)}
+  .hero-media video{object-position:42% 55%}
+  .hero-media figcaption{top:0;bottom:auto;right:auto;left:0}
+  .vplay{top:0;bottom:auto}
   .hero-media .vcota{display:none}
   .hero-media figcaption{font-size:12px;padding:7px 12px 7px 10px}
-  .hero-copy{padding:28px var(--gutter) 40px}
+  .hero-copy{padding:clamp(150px,40vw,260px) var(--gutter) 40px}
   .loc-grid{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width: 899px){
@@ -244,7 +252,7 @@ form .btn[disabled]{opacity:.7;cursor:progress}
   .topbar .brand img{height:36px}
   .topbar .sign .city,.topbar .sign .sep,.topbar .sign .by{display:none}
   .topbar .sign img{height:20px}
-  .hero h1{font-size:clamp(40px,11.5vw,52px)}
+  .hero h1{font-size:clamp(40px,11.5vw,52px);text-shadow:0 2px 18px rgba(6,63,43,.55)}
   .hero .lead{display:none}
   .lead-m{display:block !important}
   .price{margin-top:20px;padding-top:16px;column-gap:10px;row-gap:10px}
